@@ -1,0 +1,1067 @@
+ /* ==========================================================================
+       DESIGN SYSTEM & THEME TOKENS (Dark Laboratory & Electric Cyan)
+       ========================================================================== */
+    :root {
+      --bg-space: #050811;
+      --bg-surface: #0a1122;
+      --bg-card: rgba(13, 23, 44, 0.72);
+      --bg-card-hover: rgba(18, 32, 60, 0.85);
+      --border-subtle: rgba(0, 240, 255, 0.15);
+      --border-bright: rgba(0, 240, 255, 0.5);
+      --border-active: #00f0ff;
+      
+      --cyan-electric: #00f0ff;
+      --cyan-glow: rgba(0, 240, 255, 0.35);
+      --cyan-soft: rgba(0, 240, 255, 0.12);
+      
+      --amber-gear: #f59e0b;
+      --amber-bright: #fbbf24;
+      --amber-dark: #b45309;
+      
+      --green-logic: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.4);
+      --red-logic: #ef4444;
+      --red-glow: rgba(239, 68, 68, 0.4);
+      
+      --text-bright: #f8fafc;
+      --text-main: #cbd5e1;
+      --text-muted: #64748b;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      --font-ui: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      
+      --motor-duration: 0.65s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-space);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.08) 0%, transparent 60%),
+        linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 30px 30px, 30px 30px;
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Header & Diagnostic Status Bar */
+    header {
+      background: rgba(8, 14, 28, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .circuit-icon {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: var(--cyan-electric);
+      stroke-width: 2;
+      filter: drop-shadow(0 0 6px var(--cyan-glow));
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge-circuit {
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--cyan-soft);
+      border: 1px solid var(--border-bright);
+      color: var(--cyan-electric);
+      font-family: var(--font-mono);
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .header-telemetry {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .telemetry-chip {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green-logic);
+      box-shadow: 0 0 8px var(--green-glow);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .btn-audio {
+      background: var(--cyan-soft);
+      border: 1px solid var(--border-bright);
+      color: var(--cyan-electric);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-audio:hover {
+      background: rgba(0, 240, 255, 0.25);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    /* Main Grid Layout */
+    main {
+      flex: 1;
+      padding: 1.5rem;
+      max-width: 1540px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1100px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Modular Card Container */
+    .glass-panel {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 1px rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 0.85rem 1.25rem;
+      background: rgba(5, 10, 20, 0.55);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan-electric);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-body {
+      padding: 1.25rem;
+      position: relative;
+    }
+
+    /* ==========================================================================
+       SECTION 1: 4WD VEHICLE CHASSIS DISPLAY
+       ========================================================================== */
+    .chassis-viewport {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 540px;
+      background: radial-gradient(circle at center, rgba(0, 240, 255, 0.04) 0%, transparent 70%);
+      position: relative;
+    }
+
+    .vehicle-rig {
+      position: relative;
+      width: 440px;
+      height: 480px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Central Robot Chassis Frame */
+    .chassis-frame {
+      position: absolute;
+      width: 220px;
+      height: 380px;
+      background: linear-gradient(180deg, #131d33 0%, #0c1424 100%);
+      border: 2px solid rgba(0, 240, 255, 0.35);
+      border-radius: 28px;
+      box-shadow: 
+        0 0 25px rgba(0, 240, 255, 0.12),
+        inset 0 0 15px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 12px;
+      z-index: 5;
+    }
+
+    /* Chassis Acrylic Top Layer */
+    .chassis-frame::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px dashed rgba(0, 240, 255, 0.2);
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    .chassis-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--cyan-electric);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .front-arrow {
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 9px solid var(--cyan-electric);
+      filter: drop-shadow(0 0 4px var(--cyan-electric));
+    }
+
+    /* Embedded Circuit Modules on Chassis */
+    .chassis-circuits {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* Mini Arduino UNO Board Graphic */
+    .micro-arduino {
+      width: 170px;
+      height: 110px;
+      background: #005a6e;
+      border: 1.5px solid #00979d;
+      border-radius: 8px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+    }
+
+    .arduino-usb {
+      position: absolute;
+      top: -6px;
+      left: 14px;
+      width: 26px;
+      height: 14px;
+      background: #94a3b8;
+      border-radius: 2px;
+      border: 1px solid #475569;
+    }
+
+    .arduino-chip {
+      align-self: center;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 0.55rem;
+      padding: 3px 12px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .arduino-header-pins {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.55rem;
+      color: #cbd5e1;
+    }
+
+    .pin-row {
+      display: flex;
+      gap: 3px;
+    }
+
+    .pin-dot {
+      width: 5px;
+      height: 5px;
+      background: #cbd5e1;
+      border-radius: 1px;
+    }
+
+    .pin-dot.active {
+      background: var(--cyan-electric);
+      box-shadow: 0 0 6px var(--cyan-electric);
+    }
+
+    /* Dual L293D Modules Graphic */
+    .l293d-modules-row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .mini-ic {
+      width: 80px;
+      height: 75px;
+      background: #182030;
+      border: 1px solid #2d3b55;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px;
+      position: relative;
+      font-family: var(--font-mono);
+    }
+
+    .ic-notch {
+      width: 10px;
+      height: 4px;
+      background: #090e1a;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .ic-title {
+      font-size: 0.52rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    .ic-legs-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 2px;
+    }
+
+    .ic-legs {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .ic-leg {
+      width: 4px;
+      height: 3px;
+      background: #64748b;
+      border-radius: 1px;
+    }
+
+    .ic-leg.hot-fwd {
+      background: var(--green-logic);
+      box-shadow: 0 0 5px var(--green-logic);
+    }
+
+    .ic-leg.hot-rev {
+      background: var(--red-logic);
+      box-shadow: 0 0 5px var(--red-logic);
+    }
+
+    /* Power Pack on Chassis */
+    .battery-pack {
+      width: 140px;
+      height: 44px;
+      background: #0b111e;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 4px 8px;
+    }
+
+    .li-cell {
+      width: 58px;
+      height: 22px;
+      background: linear-gradient(90deg, #1e3a8a, #2563eb);
+      border-radius: 3px;
+      font-size: 0.5rem;
+      font-family: var(--font-mono);
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       YELLOW TT DC GEAR MOTORS & WHEEL ASSEMBLIES
+       ========================================================================== */
+    .motor-unit {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      z-index: 10;
+    }
+
+    /* Four Motor Placements (FL, FR, RL, RR) */
+    .motor-fl {
+      top: 35px;
+      left: 10px;
+      flex-direction: row-reverse;
+    }
+
+    .motor-fr {
+      top: 35px;
+      right: 10px;
+      flex-direction: row;
+    }
+
+    .motor-rl {
+      bottom: 35px;
+      left: 10px;
+      flex-direction: row-reverse;
+    }
+
+    .motor-rr {
+      bottom: 35px;
+      right: 10px;
+      flex-direction: row;
+    }
+
+    /* Yellow DC Gear Motor Housing */
+    .motor-body {
+      width: 82px;
+      height: 44px;
+      background: linear-gradient(180deg, var(--amber-bright) 0%, var(--amber-gear) 60%, var(--amber-dark) 100%);
+      border-radius: 5px;
+      border: 1.5px solid #d97706;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #451a03;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    /* Cylindrical Metallic Motor Core At the Back */
+    .motor-can {
+      position: absolute;
+      width: 24px;
+      height: 32px;
+      background: linear-gradient(180deg, #94a3b8 0%, #475569 50%, #1e293b 100%);
+      border: 1px solid #334155;
+      border-radius: 3px;
+      z-index: -1;
+    }
+
+    .motor-fl .motor-can, .motor-rl .motor-can {
+      right: -16px;
+    }
+
+    .motor-fr .motor-can, .motor-rr .motor-can {
+      left: -16px;
+    }
+
+    /* Motor Shaft / Axle coupling */
+    .motor-shaft {
+      width: 14px;
+      height: 10px;
+      background: #e2e8f0;
+      border: 1px solid #94a3b8;
+      box-shadow: inset 0 0 2px #475569;
+    }
+
+    /* Rubber RC Wheel & Tread */
+    .wheel-assembly {
+      width: 44px;
+      height: 88px;
+      background: #0f172a;
+      border: 3px solid #1e293b;
+      border-radius: 12px;
+      box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.7),
+        inset 0 0 8px rgba(0, 0, 0, 0.9);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Tread Pattern on Tire */
+    .wheel-treads {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 6px,
+        rgba(255, 255, 255, 0.08) 6px,
+        rgba(255, 255, 255, 0.08) 10px
+      );
+      transition: background-position 0.1s linear;
+    }
+
+    /* Wheel Rim Center Disk & Spokes */
+    .wheel-hub {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #080d1a;
+      border: 2px solid var(--border-bright);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+    }
+
+    /* High-Visibility Axis Spoke Lines */
+    .axis-spoke {
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: var(--cyan-electric);
+      box-shadow: 0 0 4px var(--cyan-electric);
+    }
+
+    .axis-spoke.horizontal {
+      transform: rotate(90deg);
+    }
+
+    .axis-spoke.diagonal-1 {
+      transform: rotate(45deg);
+      background: rgba(0, 240, 255, 0.4);
+    }
+
+    .axis-spoke.diagonal-2 {
+      transform: rotate(-45deg);
+      background: rgba(0, 240, 255, 0.4);
+    }
+
+    /* Center Shaft Pin */
+    .hub-pin {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1.5px solid var(--cyan-electric);
+      box-shadow: 0 0 6px var(--cyan-electric);
+      z-index: 2;
+    }
+
+    /* Rotation Direction Indicator Arrow on Hub */
+    .hub-pointer {
+      position: absolute;
+      top: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    /* Motor Telemetry Badge */
+    .motor-tag {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      background: rgba(8, 14, 28, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 2px 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .motor-fl .motor-tag { top: -20px; left: 0; }
+    .motor-fr .motor-tag { top: -20px; right: 0; }
+    .motor-rl .motor-tag { bottom: -20px; left: 0; }
+    .motor-rr .motor-tag { bottom: -20px; right: 0; }
+
+    .tag-state {
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .tag-state.fwd {
+      color: var(--green-logic);
+      text-shadow: 0 0 6px var(--green-glow);
+    }
+
+    .tag-state.rev {
+      color: var(--red-logic);
+      text-shadow: 0 0 6px var(--red-glow);
+    }
+
+    /* ==========================================================================
+       KEYFRAME ANIMATIONS FOR MOTOR ROTATION
+       ========================================================================== */
+    @keyframes spin-cw {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-ccw {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    @keyframes tread-forward {
+      0% { background-position-y: 0px; }
+      100% { background-position-y: 20px; }
+    }
+
+    @keyframes tread-reverse {
+      0% { background-position-y: 20px; }
+      100% { background-position-y: 0px; }
+    }
+
+    /* Animation Classes applied via JS */
+    .anim-spin-cw {
+      animation: spin-cw var(--motor-duration) linear infinite !important;
+    }
+
+    .anim-spin-ccw {
+      animation: spin-ccw var(--motor-duration) linear infinite !important;
+    }
+
+    .anim-tread-fwd {
+      animation: tread-forward 0.25s linear infinite !important;
+    }
+
+    .anim-tread-rev {
+      animation: tread-reverse 0.25s linear infinite !important;
+    }
+
+    /* Chassis Direction Vector Indicator Overlay */
+    .chassis-nav-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+
+    .vector-arrow {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(0, 240, 255, 0.1);
+      border: 2px solid var(--cyan-electric);
+      box-shadow: 0 0 20px var(--cyan-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .vector-arrow.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .vector-arrow svg {
+      width: 36px;
+      height: 36px;
+      fill: var(--cyan-electric);
+      filter: drop-shadow(0 0 8px var(--cyan-electric));
+      transition: transform 0.2s ease;
+    }
+
+    /* ==========================================================================
+       SECTION 2: CONTROL PANEL & TELEMETRY DECK
+       ========================================================================== */
+    .control-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Frosted Glass D-Pad Deck */
+    .dpad-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      background: radial-gradient(circle at center, rgba(0, 240, 255, 0.05) 0%, transparent 80%);
+    }
+
+    .dpad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 76px);
+      grid-template-rows: repeat(3, 76px);
+      gap: 10px;
+      touch-action: none;
+    }
+
+    /* Glassmorphism D-Pad Buttons */
+    .dpad-btn {
+      background: rgba(13, 25, 48, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 14px;
+      color: var(--cyan-electric);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      transition: all 0.12s ease;
+      touch-action: none;
+    }
+
+    .dpad-btn svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+      filter: drop-shadow(0 0 4px var(--cyan-glow));
+      transition: transform 0.1s ease;
+    }
+
+    .dpad-btn span {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-top: 3px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .dpad-btn:hover {
+      background: rgba(18, 38, 72, 0.85);
+      border-color: var(--border-bright);
+      box-shadow: 0 0 15px var(--cyan-glow), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Active / Press State */
+    .dpad-btn.active, .dpad-btn:active {
+      background: rgba(0, 240, 255, 0.3);
+      border-color: var(--cyan-electric);
+      color: #ffffff;
+      box-shadow: 0 0 25px var(--cyan-electric), inset 0 0 12px var(--cyan-glow);
+      transform: scale(0.94);
+    }
+
+    .dpad-btn.active svg {
+      transform: scale(1.15);
+    }
+
+    /* Grid Position Assignment */
+    .btn-fwd { grid-column: 2; grid-row: 1; }
+    .btn-left { grid-column: 1; grid-row: 2; }
+    .btn-center { 
+      grid-column: 2; 
+      grid-row: 2;
+      border-radius: 50%;
+      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(10, 16, 30, 0.5);
+      cursor: default;
+      box-shadow: none;
+    }
+    .btn-right { grid-column: 3; grid-row: 2; }
+    .btn-rev { grid-column: 2; grid-row: 3; }
+
+    .center-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      color: var(--text-muted);
+    }
+
+    .center-indicator .mode-text {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: bold;
+      color: var(--cyan-electric);
+    }
+
+    .key-hint {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    /* Controls Footer (PWM Slider & Mode) */
+    .controls-deck {
+      margin-top: 1.25rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .control-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .control-label span:last-child {
+      color: var(--cyan-electric);
+      font-weight: 600;
+    }
+
+    /* Custom Futuristic Range Slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #0f1c33;
+      border-radius: 3px;
+      border: 1px solid var(--border-subtle);
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background: var(--cyan-electric);
+      box-shadow: 0 0 10px var(--cyan-electric);
+      cursor: pointer;
+      border: 1px solid #ffffff;
+      transition: transform 0.1s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    /* ==========================================================================
+       SECTION 3: ARDUINO UNO & DUAL L293D TELEMETRY PANEL
+       ========================================================================== */
+    .circuit-telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .ic-telemetry-card {
+      background: rgba(8, 14, 28, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .ic-telemetry-header {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--cyan-electric);
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+      padding-bottom: 4px;
+    }
+
+    .pin-state-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    .pin-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .logic-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      display: inline-block;
+      transition: all 0.15s;
+    }
+
+    .logic-indicator.high {
+      background: var(--green-logic);
+      box-shadow: 0 0 8px var(--green-glow);
+      border-color: #6ee7b7;
+    }
+
+    .logic-indicator.low {
+      background: #0f172a;
+      border-color: #1e293b;
+    }
+
+    .logic-indicator.pwm {
+      background: var(--cyan-electric);
+      box-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    /* Logic Table Visualizer */
+    .logic-truth-box {
+      margin-top: 0.85rem;
+      background: rgba(5, 10, 20, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 0.75rem;
+    }
+
+    .truth-header {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .truth-item {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 3px 6px;
+      border-radius: 4px;
+      color: var(--text-muted);
+    }
+
+    .truth-item.active-row {
+      background: rgba(0, 240, 255, 0.12);
+      color: var(--cyan-electric);
+      font-weight: bold;
+      border-left: 3px solid var(--cyan-electric);
+    }
+
+    /* Keyboard Shortcuts Footer Bar */
+    .keyboard-legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0.75rem;
+      background: rgba(8, 14, 28, 0.6);
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .key-cap {
+      background: #111d33;
+      border: 1px solid #23385d;
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: var(--text-bright);
+      font-weight: bold;
+      box-shadow: 0 2px 0 #09101d;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .vehicle-rig {
+        transform: scale(0.8);
+      }
+      .circuit-telemetry-grid {
+        grid-template-columns: 1fr;
+      }
+      .keyboard-legend {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+    }
